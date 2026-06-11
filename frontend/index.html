@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NexoMark — Sua Marca no Próximo Nível</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --ink: #0e0d12;
+  --ink2: #3a3747;
+  --bg: #f5f3ef;
+  --accent: #5b3af5;
+  --accent2: #00c9a7;
+  --light: #eceaf8;
+  --white: #ffffff;
+  --card-bg: #ffffff;
+  --border: rgba(91,58,245,0.15);
+  --radius: 18px;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 2.5rem;
+  background: rgba(245,243,239,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.4rem; font-weight: 800; color: var(--accent);
+  letter-spacing: -0.5px;
+}
+.logo span { color: var(--accent2); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: 0.9rem; font-weight: 500; color: var(--ink2);
+  text-decoration: none; transition: color .2s;
+}
+.nav-links a:hover { color: var(--accent); }
+.nav-cta {
+  background: var(--accent); color: #fff;
+  font-family: var(--font-body); font-weight: 500; font-size: 0.85rem;
+  padding: 0.55rem 1.4rem; border-radius: 100px; border: none; cursor: pointer;
+  transition: background .2s, transform .15s;
+}
+.nav-cta:hover { background: #4128d4; transform: scale(1.03); }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: grid; place-items: center;
+  padding: 7rem 2.5rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(80px); pointer-events: none; z-index: 0;
+}
+.blob1 { width: 480px; height: 480px; background: rgba(91,58,245,0.15); top: -80px; right: -100px; }
+.blob2 { width: 360px; height: 360px; background: rgba(0,201,167,0.12); bottom: 0; left: -80px; }
+
+.hero-inner {
+  position: relative; z-index: 1;
+  max-width: 760px; text-align: center;
+  animation: fadeUp .8s cubic-bezier(.22,.68,0,1.2) both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--light); color: var(--accent);
+  font-size: 0.78rem; font-weight: 500; letter-spacing: .4px;
+  padding: .38rem 1rem; border-radius: 100px;
+  margin-bottom: 1.6rem; border: 1px solid var(--border);
+}
+.hero-badge::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent2); }
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 6vw, 4.4rem);
+  font-weight: 800; line-height: 1.08;
+  letter-spacing: -1.5px; color: var(--ink);
+  margin-bottom: 1.4rem;
+}
+h1 em { color: var(--accent); font-style: normal; }
+.hero-sub {
+  font-size: 1.1rem; font-weight: 300; color: var(--ink2);
+  line-height: 1.7; max-width: 540px; margin: 0 auto 2.4rem;
+}
+.hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--accent); color: #fff;
+  font-family: var(--font-body); font-weight: 500; font-size: 0.95rem;
+  padding: .8rem 2.2rem; border-radius: 100px; border: none; cursor: pointer;
+  transition: background .2s, transform .15s, box-shadow .2s;
+  text-decoration: none; display: inline-block;
+}
+.btn-primary:hover { background: #4128d4; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(91,58,245,.3); }
+.btn-outline {
+  background: transparent; color: var(--ink);
+  font-family: var(--font-body); font-weight: 500; font-size: 0.95rem;
+  padding: .8rem 2.2rem; border-radius: 100px; border: 1.5px solid rgba(14,13,18,.2); cursor: pointer;
+  transition: border-color .2s, background .2s;
+  text-decoration: none; display: inline-block;
+}
+.btn-outline:hover { border-color: var(--accent); background: var(--light); }
+.hero-stats {
+  display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap;
+  margin-top: 3.5rem; padding-top: 2.5rem;
+  border-top: 1px solid var(--border);
+}
+.stat { text-align: center; }
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 2rem; font-weight: 800; color: var(--accent);
+  letter-spacing: -1px;
+}
+.stat-label { font-size: 0.8rem; color: var(--ink2); margin-top: .2rem; }
+
+/* ── SECTIONS ── */
+section { padding: 6rem 2.5rem; }
+.section-inner { max-width: 1100px; margin: 0 auto; }
+.section-tag {
+  font-size: 0.78rem; font-weight: 500; color: var(--accent2);
+  letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: .8rem;
+}
+h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800; letter-spacing: -1px; line-height: 1.15;
+  margin-bottom: 1rem;
+}
+.sub { font-size: 1rem; color: var(--ink2); font-weight: 300; max-width: 520px; line-height: 1.7; }
+
+/* ── SERVIÇOS ── */
+#servicos { background: var(--white); }
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.2rem; margin-top: 2.8rem;
+}
+.service-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem 1.8rem;
+  transition: transform .25s, box-shadow .25s, border-color .25s;
+  position: relative; overflow: hidden;
+}
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(91,58,245,.1);
+  border-color: rgba(91,58,245,.4);
+}
+.service-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: var(--light); display: grid; place-items: center;
+  font-size: 1.4rem; margin-bottom: 1.2rem;
+}
+.service-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.1rem; font-weight: 700; margin-bottom: .5rem;
+}
+.service-card p { font-size: 0.88rem; color: var(--ink2); line-height: 1.6; }
+.service-tag {
+  display: inline-block; margin-top: 1.2rem;
+  font-size: 0.73rem; font-weight: 500; color: var(--accent);
+  background: var(--light); border-radius: 100px; padding: .25rem .8rem;
+}
+
+/* ── PLANOS ── */
+#planos { background: var(--bg); }
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.4rem; margin-top: 3rem;
+  align-items: start;
+}
+.plan-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.2rem 2rem;
+  transition: transform .25s, box-shadow .25s;
+}
+.plan-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(91,58,245,.1); }
+.plan-card.featured {
+  background: var(--accent); border-color: var(--accent);
+  transform: scale(1.03);
+  box-shadow: 0 24px 60px rgba(91,58,245,.35);
+}
+.plan-card.featured:hover { transform: scale(1.03) translateY(-4px); }
+.plan-badge {
+  font-size: 0.73rem; font-weight: 500; letter-spacing: .5px; text-transform: uppercase;
+  background: var(--light); color: var(--accent);
+  padding: .25rem .8rem; border-radius: 100px; display: inline-block; margin-bottom: 1rem;
+}
+.plan-card.featured .plan-badge { background: rgba(255,255,255,.2); color: #fff; }
+.plan-name {
+  font-family: var(--font-display);
+  font-size: 1.3rem; font-weight: 800; margin-bottom: .3rem;
+}
+.plan-card.featured .plan-name { color: #fff; }
+.plan-desc { font-size: 0.85rem; color: var(--ink2); margin-bottom: 1.5rem; line-height: 1.5; }
+.plan-card.featured .plan-desc { color: rgba(255,255,255,.75); }
+.plan-price {
+  display: flex; align-items: baseline; gap: 4px;
+  margin-bottom: 1.5rem;
+}
+.price-cur { font-size: 1rem; font-weight: 500; color: var(--accent); }
+.price-num {
+  font-family: var(--font-display);
+  font-size: 2.8rem; font-weight: 800; line-height: 1; color: var(--ink);
+  letter-spacing: -2px;
+}
+.price-period { font-size: 0.82rem; color: var(--ink2); }
+.plan-card.featured .price-cur,
+.plan-card.featured .price-num,
+.plan-card.featured .price-period { color: #fff; }
+.plan-features { list-style: none; display: flex; flex-direction: column; gap: .6rem; margin-bottom: 2rem; }
+.plan-features li { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; }
+.plan-features li::before { content: '✓'; font-weight: 700; color: var(--accent2); flex-shrink: 0; }
+.plan-card.featured .plan-features li { color: rgba(255,255,255,.9); }
+.plan-card.featured .plan-features li::before { color: var(--accent2); }
+.btn-plan {
+  display: block; text-align: center;
+  font-family: var(--font-body); font-weight: 500; font-size: 0.9rem;
+  padding: .75rem; border-radius: 100px; cursor: pointer;
+  text-decoration: none; transition: all .2s;
+  background: var(--light); color: var(--accent); border: none;
+}
+.btn-plan:hover { background: var(--accent); color: #fff; }
+.plan-card.featured .btn-plan {
+  background: #fff; color: var(--accent);
+}
+.plan-card.featured .btn-plan:hover { background: rgba(255,255,255,.85); }
+
+/* ── DESIGNS ── */
+#designs { background: var(--white); }
+.designs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem; margin-top: 2.8rem;
+}
+.design-card {
+  border-radius: var(--radius); overflow: hidden;
+  aspect-ratio: 4/3; position: relative; cursor: pointer;
+  border: 1px solid var(--border);
+  transition: transform .25s, box-shadow .25s;
+}
+.design-card:hover { transform: scale(1.03); box-shadow: 0 16px 40px rgba(0,0,0,.15); }
+.design-preview {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: .5rem; font-size: 0.8rem; font-weight: 500; color: #fff;
+}
+.d1 { background: linear-gradient(135deg, #1a1a2e 0%, #5b3af5 100%); }
+.d2 { background: linear-gradient(135deg, #00c9a7 0%, #006f5f 100%); }
+.d3 { background: linear-gradient(135deg, #f5a623 0%, #e05252 100%); }
+.d4 { background: linear-gradient(135deg, #2d2d2d 0%, #6e6e6e 100%); }
+.d5 { background: linear-gradient(135deg, #c850c0 0%, #4158d0 100%); }
+.d6 { background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); }
+.design-label {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: rgba(14,13,18,.6); backdrop-filter: blur(8px);
+  padding: .5rem .8rem;
+  font-size: 0.78rem; font-weight: 500; color: #fff;
+}
+
+/* ── ORÇAMENTO ── */
+#orcamento {
+  background: var(--ink);
+  position: relative; overflow: hidden;
+}
+#orcamento .hero-blob.blob1 { background: rgba(91,58,245,.25); }
+#orcamento .hero-blob.blob2 { background: rgba(0,201,167,.15); }
+#orcamento h2 { color: #fff; }
+#orcamento .section-tag { color: var(--accent2); }
+#orcamento .sub { color: rgba(255,255,255,.65); }
+.form-card {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius); padding: 2.5rem;
+  max-width: 680px; margin: 2.5rem auto 0;
+  backdrop-filter: blur(10px);
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+@media(max-width: 560px){ .form-row { grid-template-columns: 1fr; } }
+.form-group { display: flex; flex-direction: column; gap: .4rem; }
+label { font-size: 0.82rem; font-weight: 500; color: rgba(255,255,255,.7); }
+input, select, textarea {
+  font-family: var(--font-body); font-size: 0.9rem;
+  background: rgba(255,255,255,.08); color: #fff;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 10px; padding: .7rem 1rem;
+  outline: none; transition: border-color .2s;
+  width: 100%;
+}
+input::placeholder, textarea::placeholder { color: rgba(255,255,255,.3); }
+input:focus, select:focus, textarea:focus { border-color: var(--accent2); }
+select option { background: #1a1a2e; color: #fff; }
+textarea { resize: vertical; min-height: 110px; }
+.form-group.full { grid-column: 1 / -1; }
+.btn-submit {
+  width: 100%; margin-top: 1.2rem;
+  background: var(--accent2); color: var(--ink);
+  font-family: var(--font-body); font-weight: 700; font-size: 1rem;
+  padding: .9rem; border-radius: 100px; border: none; cursor: pointer;
+  transition: background .2s, transform .15s;
+  letter-spacing: .3px;
+}
+.btn-submit:hover { background: #00e8c1; transform: translateY(-2px); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink); color: rgba(255,255,255,.45);
+  padding: 2rem 2.5rem; text-align: center;
+  font-size: 0.82rem; border-top: 1px solid rgba(255,255,255,.06);
+}
+footer strong { color: var(--accent); }
+
+/* ── TOASTER ── */
+#toast {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+  background: var(--accent2); color: var(--ink);
+  font-weight: 600; font-size: 0.9rem;
+  padding: .9rem 1.6rem; border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0,201,167,.4);
+  transform: translateY(80px); opacity: 0;
+  transition: all .4s cubic-bezier(.22,.68,0,1.2);
+  pointer-events: none;
+}
+#toast.show { transform: translateY(0); opacity: 1; }
+
+@media(max-width: 700px){
+  nav { padding: 1rem 1.2rem; }
+  .nav-links { display: none; }
+  section { padding: 4rem 1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Nexo<span>Mark</span></div>
+  <ul class="nav-links">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#planos">Planos</a></li>
+    <li><a href="#designs">Designs</a></li>
+    <li><a href="#orcamento">Orçamento</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('orcamento').scrollIntoView({behavior:'smooth'})">Solicitar orçamento</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-blob blob1"></div>
+  <div class="hero-blob blob2"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">Agência de Marketing Digital</div>
+    <h1>Sua marca no<br/><em>próximo nível</em></h1>
+    <p class="hero-sub">Criamos estratégias, designs e campanhas que transformam empresas e autônomos em referências no mercado digital.</p>
+    <div class="hero-btns">
+      <a href="#planos" class="btn-primary">Ver planos</a>
+      <a href="#orcamento" class="btn-outline">Solicitar orçamento</a>
+    </div>
+    <div class="hero-stats">
+  <div class="stat"><div class="stat-num">🎯</div><div class="stat-label">Tráfego Pago</div></div>
+  <div class="stat"><div class="stat-num">📱</div><div class="stat-label">Redes Sociais</div></div>
+  <div class="stat"><div class="stat-num">🔍</div><div class="stat-label">SEO</div></div>
+  <div class="stat"><div class="stat-num">🎨</div><div class="stat-label">Design Visual</div></div>
+</div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos">
+  <div class="section-inner">
+    <p class="section-tag">O que fazemos</p>
+    <h2>Soluções completas<br/>para o seu negócio</h2>
+    <p class="sub">Do planejamento à execução, cobrimos todas as frentes do marketing digital moderno.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🎨</div>
+        <h3>Design & Identidade Visual</h3>
+        <p>Logotipos, paletas, tipografia e todos os materiais que constroem uma marca memorável e consistente.</p>
+        <span class="service-tag">Branding</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <h3>Gestão de Redes Sociais</h3>
+        <p>Estratégia de conteúdo, criação de posts, calendário editorial e engajamento para crescer sua presença.</p>
+        <span class="service-tag">Social Media</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📈</div>
+        <h3>Tráfego Pago</h3>
+        <p>Campanhas no Google Ads, Meta Ads e TikTok Ads com otimização contínua para máximo ROI.</p>
+        <span class="service-tag">Performance</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🌐</div>
+        <h3>Criação de Sites & Landing Pages</h3>
+        <p>Sites institucionais, e-commerces e páginas de conversão com design moderno e alta performance.</p>
+        <span class="service-tag">Web</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✉️</div>
+        <h3>E-mail Marketing</h3>
+        <p>Fluxos de nutrição, newsletters e campanhas segmentadas que convertem e fidelizam sua audiência.</p>
+        <span class="service-tag">CRM</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <h3>Relatórios & Analytics</h3>
+        <p>Dashboards personalizados, análise de métricas e relatórios mensais para decisões baseadas em dados.</p>
+        <span class="service-tag">Analytics</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANOS -->
+<section id="planos">
+  <div class="section-inner">
+    <p class="section-tag">Planos e preços</p>
+    <h2>Escolha o plano ideal<br/>para você</h2>
+    <p class="sub">Planos para autônomos, pequenas e médias empresas. Sem contratos longos, sem surpresas.</p>
+    <div class="plans-grid">
+      <!-- Starter -->
+      <div class="plan-card">
+        <span class="plan-badge">Starter</span>
+        <div class="plan-name">Essencial</div>
+        <p class="plan-desc">Perfeito para autônomos e negócios que estão começando no digital.</p>
+        <div class="plan-price">
+          <span class="price-cur">R$</span>
+          <span class="price-num">797</span>
+          <span class="price-period">/mês</span>
+        </div>
+        <ul class="plan-features">
+          <li>Gestão de 2 redes sociais</li>
+          <li>12 posts/mês</li>
+          <li>1 campanha de tráfego</li>
+          <li>Relatório mensal</li>
+          <li>Suporte via WhatsApp</li>
+        </ul>
+        <a href="#orcamento" class="btn-plan">Começar agora</a>
+      </div>
+      <!-- Pro (destaque) -->
+      <div class="plan-card featured">
+        <span class="plan-badge">Mais popular</span>
+        <div class="plan-name">Profissional</div>
+        <p class="plan-desc">Para empresas que querem crescimento acelerado e presença forte.</p>
+        <div class="plan-price">
+          <span class="price-cur">R$</span>
+          <span class="price-num">1.897</span>
+          <span class="price-period">/mês</span>
+        </div>
+        <ul class="plan-features">
+          <li>Gestão de 4 redes sociais</li>
+          <li>30 posts/mês + stories</li>
+          <li>3 campanhas de tráfego</li>
+          <li>Design de identidade visual</li>
+          <li>Landing page inclusa</li>
+          <li>Relatórios semanais</li>
+          <li>Gerente de conta dedicado</li>
+        </ul>
+        <a href="#orcamento" class="btn-plan">Escolher Pro</a>
+      </div>
+      <!-- Enterprise -->
+      <div class="plan-card">
+        <span class="plan-badge">Enterprise</span>
+        <div class="plan-name">Corporativo</div>
+        <p class="plan-desc">Soluções completas e personalizadas para médias e grandes empresas.</p>
+        <div class="plan-price">
+          <span class="price-cur">R$</span>
+          <span class="price-num">4.500</span>
+          <span class="price-period">/mês</span>
+        </div>
+        <ul class="plan-features">
+          <li>Todas as redes sociais</li>
+          <li>Conteúdo ilimitado</li>
+          <li>Campanhas ilimitadas</li>
+          <li>Branding completo</li>
+          <li>Site/e-commerce incluso</li>
+          <li>Equipe dedicada</li>
+          <li>SLA prioritário</li>
+          <li>Dashboard em tempo real</li>
+        </ul>
+        <a href="#orcamento" class="btn-plan">Falar com consultor</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DESIGNS -->
+<section id="designs">
+  <div class="section-inner">
+    <p class="section-tag">Portfólio</p>
+    <h2>Designs que<br/>convertem</h2>
+    <p class="sub">Amostras do nosso trabalho em identidade visual, posts e campanhas para clientes de vários segmentos.</p>
+    <div class="designs-grid">
+      <div class="design-card">
+        <div class="design-preview d1">
+          <span style="font-size:1.6rem">⚡</span>
+          <span>Tech Startup</span>
+        </div>
+        <div class="design-label">Identidade Visual</div>
+      </div>
+      <div class="design-card">
+        <div class="design-preview d2">
+          <span style="font-size:1.6rem">🌿</span>
+          <span>Marca Natural</span>
+        </div>
+        <div class="design-label">Branding + Social</div>
+      </div>
+      <div class="design-card">
+        <div class="design-preview d3">
+          <span style="font-size:1.6rem">🍕</span>
+          <span>Food & Beverage</span>
+        </div>
+        <div class="design-label">Campanha Ads</div>
+      </div>
+      <div class="design-card">
+        <div class="design-preview d4">
+          <span style="font-size:1.6rem">🏢</span>
+          <span>Corporativo</span>
+        </div>
+        <div class="design-label">Apresentação</div>
+      </div>
+      <div class="design-card">
+        <div class="design-preview d5">
+          <span style="font-size:1.6rem">💅</span>
+          <span>Beleza & Estética</span>
+        </div>
+        <div class="design-label">Feed Instagram</div>
+      </div>
+      <div class="design-card">
+        <div class="design-preview d6">
+          <span style="font-size:1.6rem">🚀</span>
+          <span>E-commerce</span>
+        </div>
+        <div class="design-label">Landing Page</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORÇAMENTO -->
+<section id="orcamento">
+  <div class="hero-blob blob1"></div>
+  <div class="hero-blob blob2"></div>
+  <div class="section-inner" style="position:relative;z-index:1;text-align:center">
+    <p class="section-tag">Solicite agora</p>
+    <h2>Vamos conversar sobre<br/>o seu projeto?</h2>
+    <p class="sub" style="margin:0 auto">Preencha o formulário e nossa equipe retorna em até 24 horas com uma proposta personalizada.</p>
+    <div class="form-card">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nome">Nome completo</label>
+          <input type="text" id="nome" placeholder="João Silva"/>
+        </div>
+        <div class="form-group">
+          <label for="empresa">Empresa ou negócio</label>
+          <input type="text" id="empresa" placeholder="Minha Empresa Ltda"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" placeholder="joao@empresa.com"/>
+        </div>
+        <div class="form-group">
+          <label for="telefone">WhatsApp</label>
+          <input type="tel" id="telefone" placeholder="(47) 99999-0000"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="servico">Serviço de interesse</label>
+          <select id="servico">
+            <option value="">Selecione...</option>
+            <option>Design & Identidade Visual</option>
+            <option>Gestão de Redes Sociais</option>
+            <option>Tráfego Pago</option>
+            <option>Criação de Site/Landing Page</option>
+            <option>E-mail Marketing</option>
+            <option>Pacote completo</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="plano">Plano de interesse</label>
+          <select id="plano">
+            <option value="">Selecione...</option>
+            <option>Essencial — R$ 797/mês</option>
+            <option>Profissional — R$ 1.897/mês</option>
+            <option>Corporativo — R$ 4.500/mês</option>
+            <option>Não sei ainda</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group full" style="margin-bottom:0">
+        <label for="mensagem">Conte sobre o seu projeto</label>
+        <textarea id="mensagem" placeholder="Fale sobre seu negócio, objetivos e o que espera da parceria..."></textarea>
+      </div>
+      <button class="btn-submit" onclick="enviarOrcamento()">Enviar solicitação de orçamento →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <strong>NexoMark</strong>. Todos os direitos reservados. Feito com ❤️ em Santa Catarina, Brasil.</p>
+</footer>
+
+<div id="toast">✓ Orçamento enviado! Retornaremos em até 24h.</div>
+
+<script>
+async function enviarOrcamento() {
+  const campos = ['nome','email','servico'];
+  const faltando = campos.filter(id => !document.getElementById(id).value.trim());
+  if (faltando.length) {
+    alert('Por favor, preencha pelo menos: nome, e-mail e serviço de interesse.');
+    return;
+  }
+
+  const btn = document.querySelector('.btn-submit');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  const payload = {
+    nome:     document.getElementById('nome').value.trim(),
+    empresa:  document.getElementById('empresa').value.trim(),
+    email:    document.getElementById('email').value.trim(),
+    telefone: document.getElementById('telefone').value.trim(),
+    servico:  document.getElementById('servico').value,
+    plano:    document.getElementById('plano').value,
+    mensagem: document.getElementById('mensagem').value.trim(),
+  };
+
+  try {
+    const res = await fetch('/api/budgets', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.error || 'Erro ao enviar.');
+    }
+
+    // Sucesso — mostra toast e limpa form
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+
+    ['nome','empresa','email','telefone','mensagem'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('servico').selectedIndex = 0;
+    document.getElementById('plano').selectedIndex   = 0;
+
+  } catch (err) {
+    alert('Erro: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Enviar solicitação de orçamento →';
+  }
+}
+
+// Smooth reveal nas sections
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.style.animation = 'fadeUp .6s cubic-bezier(.22,.68,0,1.2) both';
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('section').forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

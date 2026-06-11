@@ -1,0 +1,85 @@
+services:
+
+  # ── Banco de dados PostgreSQL ───────────────────────────────
+  db:
+    image: postgres:16-alpine
+    container_name: nexomark_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB:       nexomark
+      POSTGRES_USER:     nexo
+      POSTGRES_PASSWORD: nexopass
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./db/seed.sql:/docker-entrypoint-initdb.d/seed.sql:ro
+    ports:
+      - "5432:5432"          # acesso direto ao banco (remova em produção)
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexo -d nexomark"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - nexonet
+
+  # ── Backend Node.js ─────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: nexomark_api
+    restart: unless-stopped
+    env_file: ./backend/.env.example
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: nexomark
+      DB_USER: nexo
+      DB_PASS: nexopass
+      PORT:    3000
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - nexonet
+    # Porta exposta apenas internamente (Nginx faz o proxy)
+
+  # ── Frontend + Proxy (Nginx) ────────────────────────────────
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: nexomark_web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend
+    networks:
+      - nexonet
+
+  # ── Adminer (GUI para o banco) ──────────────────────────────
+  adminer:
+    image: adminer:4
+    container_name: nexomark_adminer
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+      ADMINER_DESIGN: dracula
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - nexonet
+
+volumes:
+  db_data:
+    name: nexomark_db_data
+
+networks:
+  nexonet:
+    name: nexomark_network
+    driver: bridge

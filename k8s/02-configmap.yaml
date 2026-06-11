@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nexomark-config
+  namespace: nexomark
+data:
+  PORT: "3000"
+  DB_HOST: "postgres-service"
+  DB_PORT: "5432"
+  DB_NAME: "nexomark"
+  DB_USER: "nexo"
+  CORS_ORIGIN: "http://localhost"
+  ADMIN_USER: "admin"
