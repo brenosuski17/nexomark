@@ -1,0 +1,217 @@
+{
+  "v": 6,
+  "name": "NexoMark API",
+  "folders": [
+    {
+      "id": "public",
+      "name": "Público",
+      "folders": [],
+      "requests": [
+        {
+          "id": "health",
+          "name": "Healthcheck",
+          "method": "GET",
+          "endpoint": "http://localhost/api/health",
+          "headers": [],
+          "params": [],
+          "body": { "contentType": null, "body": null },
+          "auth": { "authType": "none", "authActive": false },
+          "v": "1"
+        },
+        {
+          "id": "create-budget",
+          "name": "Enviar Orçamento",
+          "method": "POST",
+          "endpoint": "http://localhost/api/budgets",
+          "headers": [
+            { "key": "Content-Type", "value": "application/json", "active": true }
+          ],
+          "params": [],
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"nome\": \"João Silva\",\n  \"empresa\": \"Minha Empresa Ltda\",\n  \"email\": \"joao@empresa.com\",\n  \"telefone\": \"(47) 99999-0000\",\n  \"servico\": \"Gestão de Redes Sociais\",\n  \"plano\": \"Profissional — R$ 1.897/mês\",\n  \"mensagem\": \"Quero crescer no Instagram.\"\n}"
+          },
+          "auth": { "authType": "none", "authActive": false },
+          "v": "1"
+        },
+        {
+          "id": "create-budget-minimal",
+          "name": "Enviar Orçamento (campos mínimos)",
+          "method": "POST",
+          "endpoint": "http://localhost/api/budgets",
+          "headers": [
+            { "key": "Content-Type", "value": "application/json", "active": true }
+          ],
+          "params": [],
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"nome\": \"Maria\",\n  \"email\": \"maria@teste.com\",\n  \"servico\": \"Tráfego Pago\"\n}"
+          },
+          "auth": { "authType": "none", "authActive": false },
+          "v": "1"
+        },
+        {
+          "id": "create-budget-invalid",
+          "name": "Enviar Orçamento (dados inválidos — deve retornar 400)",
+          "method": "POST",
+          "endpoint": "http://localhost/api/budgets",
+          "headers": [
+            { "key": "Content-Type", "value": "application/json", "active": true }
+          ],
+          "params": [],
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"nome\": \"\",\n  \"email\": \"email-invalido\",\n  \"servico\": \"\"\n}"
+          },
+          "auth": { "authType": "none", "authActive": false },
+          "v": "1"
+        }
+      ]
+    },
+    {
+      "id": "admin",
+      "name": "Admin (requer autenticação)",
+      "folders": [],
+      "requests": [
+        {
+          "id": "admin-stats",
+          "name": "Estatísticas",
+          "method": "GET",
+          "endpoint": "http://localhost/api/admin/stats",
+          "headers": [],
+          "params": [],
+          "body": { "contentType": null, "body": null },
+          "auth": {
+            "authType": "basic",
+            "authActive": true,
+            "username": "admin",
+            "password": "admin123"
+          },
+          "v": "1"
+        },
+        {
+          "id": "admin-list-budgets",
+          "name": "Listar Orçamentos",
+          "method": "GET",
+          "endpoint": "http://localhost/api/admin/budgets",
+          "headers": [],
+          "params": [],
+          "body": { "contentType": null, "body": null },
+          "auth": {
+            "authType": "basic",
+            "authActive": true,
+            "username": "admin",
+            "password": "admin123"
+          },
+          "v": "1"
+        },
+        {
+          "id": "admin-list-budgets-filter",
+          "name": "Listar Orçamentos (filtrar por status)",
+          "method": "GET",
+          "endpoint": "http://localhost/api/admin/budgets",
+          "headers": [],
+          "params": [
+            { "key": "status", "value": "novo", "active": true },
+            { "key": "page", "value": "1", "active": true },
+            { "key": "limit", "value": "20", "active": true }
+          ],
+          "body": { "contentType": null, "body": null },
+          "auth": {
+            "authType": "basic",
+            "authActive": true,
+            "username": "admin",
+            "password": "admin123"
+          },
+          "v": "1"
+        },
+        {
+          "id": "admin-get-budget",
+          "name": "Buscar Orçamento por ID",
+          "method": "GET",
+          "endpoint": "http://localhost/api/admin/budgets/1",
+          "headers": [],
+          "params": [],
+          "body": { "contentType": null, "body": null },
+          "auth": {
+            "authType": "basic",
+            "authActive": true,
+            "username": "admin",
+            "password": "admin123"
+          },
+          "v": "1"
+        },
+        {
+          "id": "admin-update-status",
+          "name": "Atualizar Status do Orçamento",
+          "method": "PATCH",
+          "endpoint": "http://localhost/api/admin/budgets/1",
+          "headers": [
+            { "key": "Content-Type", "value": "application/json", "active": true }
+          ],
+          "params": [],
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"status\": \"em_contato\",\n  \"nota_interna\": \"Cliente ligou, muito interessado no plano Profissional.\"\n}"
+          },
+          "auth": {
+            "authType": "basic",
+            "authActive": true,
+            "username": "admin",
+            "password": "admin123"
+          },
+          "v": "1"
+        },
+        {
+          "id": "admin-update-fechado",
+          "name": "Marcar como Fechado",
+          "method": "PATCH",
+          "endpoint": "http://localhost/api/admin/budgets/1",
+          "headers": [
+            { "key": "Content-Type", "value": "application/json", "active": true }
+          ],
+          "params": [],
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"status\": \"fechado\",\n  \"nota_interna\": \"Contrato assinado em 10/06/2025.\"\n}"
+          },
+          "auth": {
+            "authType": "basic",
+            "authActive": true,
+            "username": "admin",
+            "password": "admin123"
+          },
+          "v": "1"
+        },
+        {
+          "id": "admin-delete-budget",
+          "name": "Deletar Orçamento",
+          "method": "DELETE",
+          "endpoint": "http://localhost/api/admin/budgets/1",
+          "headers": [],
+          "params": [],
+          "body": { "contentType": null, "body": null },
+          "auth": {
+            "authType": "basic",
+            "authActive": true,
+            "username": "admin",
+            "password": "admin123"
+          },
+          "v": "1"
+        },
+        {
+          "id": "admin-no-auth",
+          "name": "Listar Orçamentos SEM autenticação (deve retornar 401)",
+          "method": "GET",
+          "endpoint": "http://localhost/api/admin/budgets",
+          "headers": [],
+          "params": [],
+          "body": { "contentType": null, "body": null },
+          "auth": { "authType": "none", "authActive": false },
+          "v": "1"
+        }
+      ]
+    }
+  ],
+  "requests": []
+}
